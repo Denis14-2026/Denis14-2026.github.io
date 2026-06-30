@@ -174,7 +174,7 @@
     <section class="counter-section">
       <p class="counter-label">De când ne iubim...</p>
       <div class="counter-grid">
-        <div class="counter-box"><div class="counter-number" id="counter-days">6</div><div class="counter-unit">Zile</div></div>
+        <div class="counter-box"><div class="counter-number" id="counter-days">0</div><div class="counter-unit">Zile</div></div>
         <div class="counter-box"><div class="counter-number" id="counter-hours">0</div><div class="counter-unit">Ore</div></div>
         <div class="counter-box"><div class="counter-number" id="counter-mins">0</div><div class="counter-unit">Minute</div></div>
         <div class="counter-box"><div class="counter-number" id="counter-secs">0</div><div class="counter-unit">Secunde</div></div>
@@ -261,47 +261,47 @@
       });
 
       // ==================== PERFECT TIMER ====================
-      var startDate = new Date('2026-06-23T00:00:00');
+	var startDate = new Date('2026-06-24T00:00:00');
 
-      function updateCounter() {
-        var now = new Date();
-        var diff = now - startDate;
+	function updateCounter() {
+  	var now = new Date();
+  	var diff = now - startDate;
 
-        if (diff < 0) {
-          document.getElementById('counter-days').textContent = "0";
-          document.getElementById('counter-hours').textContent = "0";
-          document.getElementById('counter-mins').textContent = "0";
-          document.getElementById('counter-secs').textContent = "0";
-          return;
-        }
+  	if (diff < 0) {
+    	document.getElementById('counter-days').textContent = "0";
+    	document.getElementById('counter-hours').textContent = "0";
+    	document.getElementById('counter-mins').textContent = "0";
+    	document.getElementById('counter-secs').textContent = "0";
+    	return;
+  	}
 
-        var days = Math.floor(diff / 86400000);
-        var hours = Math.floor((diff % 86400000) / 3600000);
-        var minutes = Math.floor((diff % 3600000) / 60000);
-        var seconds = Math.floor((diff % 60000) / 1000);
+  	var days = Math.floor(diff / 86400000);
+  	var hours = Math.floor((diff % 86400000) / 3600000);
+  	var minutes = Math.floor((diff % 3600000) / 60000);
+  	var seconds = Math.floor((diff % 60000) / 1000);
 
-        document.getElementById('counter-days').textContent = days;
-        document.getElementById('counter-hours').textContent = hours;
-        document.getElementById('counter-mins').textContent = minutes;
-        document.getElementById('counter-secs').textContent = seconds;
+  	document.getElementById('counter-days').textContent = days;
+  	document.getElementById('counter-hours').textContent = hours;
+  	document.getElementById('counter-mins').textContent = minutes;
+  	document.getElementById('counter-secs').textContent = seconds;
+	}
+
+	updateCounter();
+	setInterval(updateCounter, 1000);
+
+// Intersection Observer for animations
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      if (entry.target.classList.contains('reason-card')) {
+        var cards = document.querySelectorAll('.reason-card');
+        var idx = Array.prototype.indexOf.call(cards, entry.target);
+        entry.target.style.transitionDelay = (idx * 150) + 'ms';
       }
-
-      updateCounter();
-      setInterval(updateCounter, 1000);
-
-      // Intersection Observer for animations
-      var observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            if (entry.target.classList.contains('reason-card')) {
-              var cards = document.querySelectorAll('.reason-card');
-              var idx = Array.prototype.indexOf.call(cards, entry.target);
-              entry.target.style.transitionDelay = (idx * 150) + 'ms';
-            }
-          }
-        });
-      }, { threshold: 0.15 });
+    }
+  });
+}, { threshold: 0.15 });
 
       document.querySelectorAll('.reason-card, .letter-card, .forever-word, .forever-sub, .forever-hearts, .promise-text, .promise-divider, .promise-tag').forEach(function(el) {
         observer.observe(el);
