@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="ro">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="manifest" href="/manifest.json" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+    <title>Pentru Tine, Iubirea Mea ❤️</title>
+    <style>
+      *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+      :root {
+        --rose: #e84368; --rose-light: #ff6b8a; --rose-dark: #c4284e;
+        --gold: #d4a853; --gold-light: #f0d48a; --cream: #fef5f0;
+        --dark: #0a0a0f; --wine: #2a0a14;
+      }
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: 'Cormorant Garamond', serif;
+        background: var(--dark); color: var(--cream);
+        overflow-x: hidden;
+      }
+      #root { display: none; }
+
+      .sparkle {
+        position: fixed; pointer-events: none; width: 6px; height: 6px;
+        border-radius: 50%; background: var(--gold-light);
+        box-shadow: 0 0 6px var(--gold), 0 0 12px var(--rose-light);
+        z-index: 9999; animation: sparkle-fade 0.8s ease-out forwards;
+      }
+      @keyframes sparkle-fade {
+        0% { opacity: 1; transform: scale(1); }
+        100% { opacity: 0; transform: scale(0) translateY(-20px); }
+      }
+
+      .hearts-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+      .floating-heart { position: absolute; bottom: -60px; opacity: 0.15; animation: float-up linear infinite; }
+      @keyframes float-up {
+        0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0; }
+        10% { opacity: 0.15; } 90% { opacity: 0.15; }
+        100% { transform: translateY(-110vh) rotate(360deg) scale(0.5); opacity: 0; }
+      }
+
+      section { position: relative; z-index: 1; }
+
+      .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; }
+      .hero::before {
+        content: ''; position: absolute; inset: 0;
+        background: radial-gradient(ellipse at 50% 30%, rgba(232,67,104,0.15) 0%, transparent 60%), radial-gradient(ellipse at 20% 80%, rgba(212,168,83,0.08) 0%, transparent 50%), radial-gradient(ellipse at 80% 70%, rgba(232,67,104,0.08) 0%, transparent 50%);
+        z-index: 0;
+      }
+      .hero-image { position: absolute; inset: 0; z-index: -1; opacity: 0.2; }
+      .hero-image img { width: 100%; height: 100%; object-fit: cover; }
+      .hero-content { position: relative; z-index: 1; padding: 2rem; }
+      .hero-pre { font-family: 'Great Vibes', cursive; font-size: clamp(1.4rem, 3vw, 2.2rem); color: var(--gold); opacity: 0; animation: fade-down 1s 0.3s ease-out forwards; }
+      .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 8vw, 7rem); font-weight: 900; line-height: 1.05; margin: 0.3em 0; opacity: 0; animation: fade-up 1.2s 0.7s ease-out forwards; }
+      .hero-title .line-1 { display: block; background: linear-gradient(135deg, var(--cream) 0%, var(--rose-light) 50%, var(--gold-light) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+      .hero-title .line-2 { display: block; font-family: 'Great Vibes', cursive; font-size: 0.55em; font-weight: 400; color: var(--rose-light); -webkit-text-fill-color: var(--rose-light); margin-top: 0.1em; }
+      .hero-sub { font-size: clamp(1rem, 2vw, 1.4rem); font-weight: 300; color: rgba(254,245,240,0.7); max-width: 500px; margin: 0 auto; letter-spacing: 0.04em; opacity: 0; animation: fade-up 1s 1.2s ease-out forwards; }
+      .hero-heart { margin-top: 2.5rem; font-size: 2.5rem; opacity: 0; animation: fade-up 1s 1.6s ease-out forwards; }
+      .hero-heart span { display: inline-block; animation: pulse-heart 1.5s ease-in-out infinite; }
+      @keyframes pulse-heart {
+        0%, 100% { transform: scale(1); }
+        15% { transform: scale(1.3); } 30% { transform: scale(1); }
+        45% { transform: scale(1.2); } 60% { transform: scale(1); }
+      }
+      .scroll-indicator { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); opacity: 0; animation: fade-up 1s 2s ease-out forwards; }
+      .scroll-indicator div { width: 24px; height: 40px; border: 2px solid rgba(254,245,240,0.3); border-radius: 12px; display: flex; align-items: flex-start; justify-content: center; padding-top: 6px; }
+      .scroll-indicator div::after { content: ''; width: 4px; height: 8px; background: var(--rose-light); border-radius: 2px; animation: scroll-dot 2s ease-in-out infinite; }
+      @keyframes scroll-dot { 0%, 100% { transform: translateY(0); opacity: 1; } 50% { transform: translateY(14px); opacity: 0.3; } }
+
+      .love-btn {
+        display: inline-block; margin-top: 2.5rem; padding: 1rem 3rem;
+        font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600;
+        letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream);
+        background: linear-gradient(135deg, var(--rose-dark), var(--rose));
+        border: none; border-radius: 50px; cursor: pointer; position: relative; overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s; opacity: 0; animation: fade-up 1s 2s ease-out forwards;
+      }
+      .love-btn:hover { transform: scale(1.05); box-shadow: 0 8px 40px rgba(232,67,104,0.4); }
+
+      .counter-section { padding: 5rem 2rem; text-align: center; background: linear-gradient(180deg, transparent 0%, rgba(42,10,20,0.4) 50%, transparent 100%); }
+      .counter-label { font-family: 'Great Vibes', cursive; font-size: clamp(1.5rem, 3vw, 2rem); color: var(--gold); margin-bottom: 1.5rem; }
+      .counter-grid { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; max-width: 700px; margin: 0 auto; }
+      .counter-box { background: rgba(232,67,104,0.08); border: 1px solid rgba(232,67,104,0.15); border-radius: 16px; padding: 1.5rem 2rem; min-width: 120px; backdrop-filter: blur(10px); transition: transform 0.3s, box-shadow 0.3s; }
+      .counter-box:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(232,67,104,0.15); }
+      .counter-number { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; color: var(--rose-light); }
+      .counter-unit { font-size: 0.85rem; color: rgba(254,245,240,0.6); margin-top: 0.3rem; text-transform: uppercase; letter-spacing: 0.15em; }
+
+      .reasons-section { padding: 6rem 2rem; position: relative; }
+      .reasons-section .section-bg { position: absolute; inset: 0; z-index: -1; opacity: 0.12; }
+      .reasons-section .section-bg img { width: 100%; height: 100%; object-fit: cover; }
+      .section-header { text-align: center; margin-bottom: 4rem; }
+      .section-eyebrow { font-family: 'Great Vibes', cursive; font-size: clamp(1.3rem, 2.5vw, 1.8rem); color: var(--gold); }
+      .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; margin-top: 0.3em; background: linear-gradient(135deg, var(--cream) 30%, var(--rose-light) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+      .reasons-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto; }
+      .reason-card { background: linear-gradient(145deg, rgba(18,18,26,0.9), rgba(42,10,20,0.3)); border: 1px solid rgba(232,67,104,0.1); border-radius: 20px; padding: 2.5rem 2rem; text-align: center; opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out, box-shadow 0.4s; }
+      .reason-card.visible { opacity: 1; transform: translateY(0); }
+      .reason-card:hover { transform: translateY(-8px) !important; box-shadow: 0 16px 50px rgba(232,67,104,0.15); border-color: rgba(232,67,104,0.3); }
+      .reason-icon { font-size: 2.5rem; margin-bottom: 1rem; display: inline-block; animation: gentle-bounce 3s ease-in-out infinite; }
+      @keyframes gentle-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+      .reason-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--rose-light); margin-bottom: 0.8rem; }
+      .reason-text { font-size: 1.05rem; line-height: 1.7; color: rgba(254,245,240,0.7); font-weight: 300; }
+
+      .letter-section { padding: 6rem 2rem; display: flex; justify-content: center; }
+      .letter-card { max-width: 650px; width: 100%; background: linear-gradient(145deg, rgba(42,10,20,0.5), rgba(18,18,26,0.8)); border: 1px solid rgba(212,168,83,0.2); border-radius: 24px; padding: 3.5rem 3rem; position: relative; overflow: hidden; opacity: 0; transform: scale(0.95); transition: opacity 1s ease-out, transform 1s ease-out; }
+      .letter-card.visible { opacity: 1; transform: scale(1); }
+      .letter-card::before { content: '"'; position: absolute; top: -0.2em; left: 0.3em; font-family: 'Playfair Display', serif; font-size: 12rem; color: rgba(232,67,104,0.06); line-height: 1; }
+      .letter-greeting { font-family: 'Great Vibes', cursive; font-size: clamp(1.8rem, 4vw, 2.5rem); color: var(--gold); margin-bottom: 1.5rem; position: relative; }
+      .letter-body p { font-size: 1.15rem; line-height: 1.9; color: rgba(254,245,240,0.8); font-weight: 300; margin-bottom: 1.2rem; position: relative; }
+      .letter-sign { font-family: 'Great Vibes', cursive; font-size: 1.8rem; color: var(--rose-light); margin-top: 2rem; text-align: right; position: relative; }
+
+      .promise-section { padding: 5rem 2rem; text-align: center; background: linear-gradient(180deg, transparent 0%, rgba(42,10,20,0.3) 50%, transparent 100%); }
+      .promise-text { font-family: 'Playfair Display', serif; font-size: clamp(1.3rem, 3vw, 2rem); font-weight: 400; font-style: italic; color: rgba(254,245,240,0.8); max-width: 700px; margin: 0 auto; line-height: 1.8; opacity: 0; transition: opacity 1s ease-out; }
+      .promise-text.visible { opacity: 1; }
+      .promise-divider { width: 80px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 2rem auto; opacity: 0; transition: opacity 1s 0.3s ease-out; }
+      .promise-divider.visible { opacity: 1; }
+      .promise-tag { font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--rose-light); opacity: 0; transition: opacity 1s 0.6s ease-out; }
+      .promise-tag.visible { opacity: 1; }
+
+      .forever-section { min-height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 4rem 2rem; position: relative; overflow: hidden; }
+      .forever-section .section-bg { position: absolute; inset: 0; z-index: -1; opacity: 0.18; }
+      .forever-section .section-bg img { width: 100%; height: 100%; object-fit: cover; }
+      .forever-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(232,67,104,0.1) 0%, transparent 70%); }
+      .forever-content { position: relative; z-index: 1; }
+      .forever-word { font-family: 'Playfair Display', serif; font-size: clamp(4rem, 12vw, 10rem); font-weight: 900; letter-spacing: -0.02em; background: linear-gradient(135deg, var(--rose-light) 0%, var(--gold) 40%, var(--rose) 70%, var(--gold-light) 100%); background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: gradient-shift 4s ease-in-out infinite; opacity: 0; transition: opacity 1.5s ease-out; }
+      .forever-word.visible { opacity: 1; }
+      @keyframes gradient-shift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+      .forever-sub { font-size: clamp(1.1rem, 2vw, 1.5rem); color: rgba(254,245,240,0.7); font-weight: 300; max-width: 550px; margin: 1.5rem auto 0; line-height: 1.8; opacity: 0; transition: opacity 1.2s 0.5s ease-out; }
+      .forever-sub.visible { opacity: 1; }
+      .forever-hearts { margin-top: 3rem; font-size: 2rem; letter-spacing: 0.5em; opacity: 0; transition: opacity 1s 1s ease-out; }
+      .forever-hearts.visible { opacity: 1; }
+      .forever-hearts span { display: inline-block; animation: pulse-heart 1.5s ease-in-out infinite; }
+      .forever-hearts span:nth-child(2) { animation-delay: 0.3s; }
+      .forever-hearts span:nth-child(3) { animation-delay: 0.6s; }
+
+      footer { padding: 3rem 2rem; text-align: center; border-top: 1px solid rgba(232,67,104,0.1); }
+      .footer-heart { font-size: 1.5rem; margin-bottom: 1rem; display: inline-block; animation: pulse-heart 1.5s ease-in-out infinite; }
+      .footer-text { font-family: 'Great Vibes', cursive; font-size: 1.4rem; color: var(--gold); }
+      .footer-year { font-size: 0.85rem; color: rgba(254,245,240,0.3); margin-top: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; }
+
+      .burst-heart { position: fixed; pointer-events: none; font-size: 1.5rem; z-index: 9999; animation: burst 1s ease-out forwards; }
+      @keyframes burst { 0% { opacity: 1; transform: translate(0, 0) scale(1); } 100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0.3) rotate(var(--rot)); } }
+
+      @keyframes fade-up { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes fade-down { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+      @media (max-width: 640px) {
+        .counter-grid { gap: 0.8rem; }
+        .counter-box { padding: 1.2rem 1.5rem; min-width: 100px; }
+        .letter-card { padding: 2.5rem 1.8rem; }
+        .reasons-grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hearts-bg" id="hearts-bg"></div>
+
+    <section class="hero">
+      <div class="hero-image"><img src="https://media.base44.com/images/public/6a416d24aef3a674691a9190/35616c0f4_generated_df776c26.png" alt="Romantic starry night" /></div>
+      <div class="hero-content">
+        <p class="hero-pre">pentru Stefania, cea mai frumoasă fată din lume</p>
+        <h1 class="hero-title">
+          <span class="line-1">Te Iubesc</span>
+          <span class="line-2">pentru totdeauna</span>
+        </h1>
+        <p class="hero-sub">Tu ești soarele meu, luna mea și toate stelele din cer. Cu tine, fiecare moment e magic.</p>
+        <div class="hero-heart"><span>❤️</span></div>
+        <button class="love-btn" onclick="burstHearts(event)">Apasă pentru Iubire ✨</button>
+      </div>
+      <div class="scroll-indicator"><div></div></div>
+    </section>
+
+    <section class="counter-section">
+      <p class="counter-label">De când ne iubim...</p>
+      <div class="counter-grid">
+        <div class="counter-box"><div class="counter-number" id="counter-days">0</div><div class="counter-unit">Zile</div></div>
+        <div class="counter-box"><div class="counter-number" id="counter-hours">0</div><div class="counter-unit">Ore</div></div>
+        <div class="counter-box"><div class="counter-number" id="counter-mins">0</div><div class="counter-unit">Minute</div></div>
+        <div class="counter-box"><div class="counter-number" id="counter-secs">0</div><div class="counter-unit">Secunde</div></div>
+      </div>
+    </section>
+
+    <section class="reasons-section">
+      <div class="section-bg"><img src="https://media.base44.com/images/public/6a416d24aef3a674691a9190/74d464faf_generated_4cfbfe62.png" alt="Roses" /></div>
+      <div class="section-header">
+        <p class="section-eyebrow">De ce te iubesc</p>
+        <h2 class="section-title">Motivele Inimii Mele</h2>
+      </div>
+      <div class="reasons-grid">
+        <div class="reason-card"><div class="reason-icon">🌹</div><h3 class="reason-title">Zâmbetul Tău</h3><p class="reason-text">Când zâmbești, toată lumea mea se luminează. Ai cel mai frumos zâmbet pe care l-am văzut vreodată.</p></div>
+        <div class="reason-card"><div class="reason-icon">💫</div><h3 class="reason-title">Sufletul Tău</h3><p class="reason-text">Ai un suflet atât de frumos și de cald. Faci totul mai bun doar prin prezența ta.</p></div>
+        <div class="reason-card"><div class="reason-icon">🦋</div><h3 class="reason-title">Cum Mă Faci Să Mă Simt</h3><p class="reason-text">Lângă tine, simt fluturi în stomac de fiecare dată. Ești cea mai frumoasă emoție a mea.</p></div>
+        <div class="reason-card"><div class="reason-icon">🌙</div><h3 class="reason-title">Nopțile Noastre</h3><p class="reason-text">Fiecare noapte petrecută vorbind cu tine e o noapte perfectă. Nu am nevoie de altceva.</p></div>
+        <div class="reason-card"><div class="reason-icon">🔥</div><h3 class="reason-title">Puterea Ta</h3><p class="reason-text">Ești cea mai puternică și curajoasă persoană pe care o cunosc. Mă inspiri în fiecare zi.</p></div>
+        <div class="reason-card"><div class="reason-icon">♾️</div><h3 class="reason-title">Totul</h3><p class="reason-text">Te iubesc pentru tot ce ești — pentru imperfecțiunile tale perfecte, pentru râsul tău, pentru tot.</p></div>
+      </div>
+    </section>
+
+    <section class="letter-section">
+      <div class="letter-card">
+        <div class="letter-greeting">Stefania, iubita mea dragă,</div>
+        <div class="letter-body">
+          <p>De când te-am cunoscut, viața mea s-a schimbat complet. Tu ai adus culoare în zilele mele gri și căldură în nopțile mele reci.</p>
+          <p>Fiecare secundă petrecută cu tine este un dar. Fiecare „te iubesc" pe care ți-l spun vine din adâncul sufletului meu. Și fiecare zi care trece mă face să te iubesc și mai mult.</p>
+          <p>Nu știu ce-mi rezervă viitorul, dar știu un lucru sigur — vreau să fii tu acolo, lângă mine, ținându-mă de mână, zâmbindu-mi, iubindu-mă așa cum doar tu știi.</p>
+          <p>Ești tot ce am visat vreodată și mai mult decât am crezut că merit. Mulțumesc că exiști. Mulțumesc că mă iubești. Mulțumesc că ești a mea.</p>
+        </div>
+        <div class="letter-sign">Cu toată dragostea mea, pentru totdeauna ❤️</div>
+      </div>
+    </section>
+
+    <section class="promise-section">
+      <p class="promise-text">„Îți promit că voi fi aici — în zilele bune și în cele grele, în dimineți liniștite și în seri cu stele. Îți promit că te voi alege pe tine, în fiecare zi, pentru totdeauna."</p>
+      <div class="promise-divider"></div>
+      <p class="promise-tag">Promisiunea mea pentru tine</p>
+    </section>
+
+    <section class="forever-section">
+      <div class="section-bg"><img src="https://media.base44.com/images/public/6a416d24aef3a674691a9190/f1d36c851_generated_9d0bb76c.png" alt="Romantic sunset" /></div>
+      <div class="forever-content">
+        <h2 class="forever-word">Forever</h2>
+        <p class="forever-sub">Nu e doar un cuvânt. E o promisiune. E un jurământ. E ceea ce simt pentru tine — azi, mâine, și în fiecare zi care va veni. Tu și eu, împreună, mereu.</p>
+        <div class="forever-hearts"><span>❤️</span><span>❤️</span><span>❤️</span></div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-heart">❤️</div>
+      <div class="footer-text">Cu dragoste, acum și pentru totdeauna</div>
+      <div class="footer-year">Povestea noastră de iubire • <span id="footer-year"></span></div>
+    </footer>
+
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    <script>
+      (function() {
+        var container = document.getElementById('hearts-bg');
+        var hearts = ['❤️','💕','💗','💖','♥️','🤍','💛'];
+        for (var i = 0; i < 20; i++) {
+          var heart = document.createElement('span');
+          heart.className = 'floating-heart';
+          heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+          heart.style.left = Math.random() * 100 + '%';
+          heart.style.animationDuration = (12 + Math.random() * 18) + 's';
+          heart.style.animationDelay = Math.random() * 15 + 's';
+          heart.style.fontSize = (0.8 + Math.random() * 1.2) + 'rem';
+          container.appendChild(heart);
+        }
+      })();
+
+      document.addEventListener('mousemove', function(e) {
+        if (Math.random() > 0.85) {
+          var s = document.createElement('div');
+          s.className = 'sparkle';
+          s.style.left = e.clientX + 'px';
+          s.style.top = e.clientY + 'px';
+          document.body.appendChild(s);
+          setTimeout(function() { s.remove(); }, 800);
+        }
+      });
+
+      var startDate = new Date('2026-06-23T00:00:00');
+      function updateCounter() {
+        var diff = new Date() - startDate;
+        document.getElementById('counter-days').textContent = Math.floor(diff / 86400000);
+        document.getElementById('counter-hours').textContent = Math.floor((diff / 3600000) % 24);
+        document.getElementById('counter-mins').textContent = Math.floor((diff / 60000) % 60);
+        document.getElementById('counter-secs').textContent = Math.floor((diff / 1000) % 60);
+      }
+      updateCounter();
+      setInterval(updateCounter, 1000);
+
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            if (entry.target.classList.contains('reason-card')) {
+              var cards = document.querySelectorAll('.reason-card');
+              var idx = Array.prototype.indexOf.call(cards, entry.target);
+              entry.target.style.transitionDelay = (idx * 150) + 'ms';
+            }
+          }
+        });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('.reason-card, .letter-card, .forever-word, .forever-sub, .forever-hearts, .promise-text, .promise-divider, .promise-tag').forEach(function(el) { observer.observe(el); });
+
+      function burstHearts(e) {
+        var items = ['❤️','💕','💗','💖','🌹','✨','💫'];
+        for (var i = 0; i < 15; i++) {
+          var h = document.createElement('span');
+          h.className = 'burst-heart';
+          h.textContent = items[Math.floor(Math.random() * items.length)];
+          h.style.left = e.clientX + 'px';
+          h.style.top = e.clientY + 'px';
+          var angle = (Math.PI * 2 * i) / 15;
+          var dist = 60 + Math.random() * 120;
+          h.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
+          h.style.setProperty('--ty', (Math.sin(angle) * dist - 40) + 'px');
+          h.style.setProperty('--rot', (Math.random() * 360) + 'deg');
+          document.body.appendChild(h);
+          setTimeout(function(el) { el.remove(); }, 1000, h);
+        }
+      }
+
+      document.getElementById('footer-year').textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
