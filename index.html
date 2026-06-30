@@ -231,9 +231,8 @@
       <div class="footer-year">Povestea noastră de iubire • <span id="footer-year"></span></div>
     </footer>
 
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
     <script>
+      // Floating hearts
       (function() {
         var container = document.getElementById('hearts-bg');
         var hearts = ['❤️','💕','💗','💖','♥️','🤍','💛'];
@@ -249,6 +248,7 @@
         }
       })();
 
+      // Sparkles on mouse move
       document.addEventListener('mousemove', function(e) {
         if (Math.random() > 0.85) {
           var s = document.createElement('div');
@@ -260,17 +260,36 @@
         }
       });
 
+      // ==================== PERFECT TIMER ====================
       var startDate = new Date('2026-06-23T00:00:00');
+
       function updateCounter() {
-        var diff = new Date() - startDate;
-        document.getElementById('counter-days').textContent = Math.floor(diff / 86400000);
-        document.getElementById('counter-hours').textContent = Math.floor((diff / 3600000) % 24);
-        document.getElementById('counter-mins').textContent = Math.floor((diff / 60000) % 60);
-        document.getElementById('counter-secs').textContent = Math.floor((diff / 1000) % 60);
+        var now = new Date();
+        var diff = now - startDate;
+
+        if (diff < 0) {
+          document.getElementById('counter-days').textContent = "0";
+          document.getElementById('counter-hours').textContent = "0";
+          document.getElementById('counter-mins').textContent = "0";
+          document.getElementById('counter-secs').textContent = "0";
+          return;
+        }
+
+        var days = Math.floor(diff / 86400000);
+        var hours = Math.floor((diff % 86400000) / 3600000);
+        var minutes = Math.floor((diff % 3600000) / 60000);
+        var seconds = Math.floor((diff % 60000) / 1000);
+
+        document.getElementById('counter-days').textContent = days;
+        document.getElementById('counter-hours').textContent = hours;
+        document.getElementById('counter-mins').textContent = minutes;
+        document.getElementById('counter-secs').textContent = seconds;
       }
+
       updateCounter();
       setInterval(updateCounter, 1000);
 
+      // Intersection Observer for animations
       var observer = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
           if (entry.isIntersecting) {
@@ -283,8 +302,12 @@
           }
         });
       }, { threshold: 0.15 });
-      document.querySelectorAll('.reason-card, .letter-card, .forever-word, .forever-sub, .forever-hearts, .promise-text, .promise-divider, .promise-tag').forEach(function(el) { observer.observe(el); });
 
+      document.querySelectorAll('.reason-card, .letter-card, .forever-word, .forever-sub, .forever-hearts, .promise-text, .promise-divider, .promise-tag').forEach(function(el) {
+        observer.observe(el);
+      });
+
+      // Burst hearts function
       function burstHearts(e) {
         var items = ['❤️','💕','💗','💖','🌹','✨','💫'];
         for (var i = 0; i < 15; i++) {
@@ -303,6 +326,7 @@
         }
       }
 
+      // Footer year
       document.getElementById('footer-year').textContent = new Date().getFullYear();
     </script>
   </body>
